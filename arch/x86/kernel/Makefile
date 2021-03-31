@@ -73,7 +73,8 @@ obj-y			+= pci-iommu_table.o
 obj-y			+= resource.o
 obj-y			+= irqflags.o
 obj-y			+= static_call.o
-
+obj-y 			+= mycall.o
+obj-y 			+= sandbox.o
 obj-y				+= process.o
 obj-y				+= fpu/
 obj-y				+= ptrace.o

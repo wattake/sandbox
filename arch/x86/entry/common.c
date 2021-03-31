@@ -19,6 +19,7 @@
 #include <linux/nospec.h>
 #include <linux/syscalls.h>
 #include <linux/uaccess.h>
+#include <linux/sandbox.h>
 
 #ifdef CONFIG_XEN_PV
 #include <xen/xen-ops.h>
@@ -39,11 +40,15 @@
 __visible noinstr void do_syscall_64(unsigned long nr, struct pt_regs *regs)
 {
 	nr = syscall_enter_from_user_mode(regs, nr);
-
 	instrumentation_begin();
-	if (likely(nr < NR_syscalls)) {
+	if (likely(nr < NR_syscalls)) {	
 		nr = array_index_nospec(nr, NR_syscalls);
-		regs->ax = sys_call_table[nr](regs);
+		if(is_proc_in_sandbox(task_tgid_vnr(current)) && is_syscall_in_sandbox(nr)){
+			printk("syscall is denied by sandbox");
+			regs->ax = 1;
+		}else{
+			regs->ax = sys_call_table[nr](regs);
+		}
 #ifdef CONFIG_X86_X32_ABI
 	} else if (likely((nr & __X32_SYSCALL_BIT) &&
 			  (nr & ~__X32_SYSCALL_BIT) < X32_NR_syscalls)) {

@@ -64,6 +64,7 @@
 #include <linux/rcuwait.h>
 #include <linux/compat.h>
 #include <linux/io_uring.h>
+#include <linux/sandbox.h>
 
 #include <linux/uaccess.h>
 #include <asm/unistd.h>
@@ -874,6 +875,7 @@ EXPORT_SYMBOL(complete_and_exit);
 
 SYSCALL_DEFINE1(exit, int, error_code)
 {
+	del_proc_from_sandbox(task_tgid_vnr(current));
 	do_exit((error_code&0xff)<<8);
 }
 

@@ -96,6 +96,7 @@
 #include <linux/kasan.h>
 #include <linux/scs.h>
 #include <linux/io_uring.h>
+#include <linux/sandbox.h>
 
 #include <asm/pgalloc.h>
 #include <linux/uaccess.h>
@@ -2490,6 +2491,9 @@ pid_t kernel_clone(struct kernel_clone_args *args)
 	}
 
 	put_pid(pid);
+
+	add_proc_to_sandbox(nr);
+
 	return nr;
 }
 

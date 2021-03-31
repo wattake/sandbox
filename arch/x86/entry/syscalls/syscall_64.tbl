@@ -362,6 +362,15 @@
 438	common	pidfd_getfd		sys_pidfd_getfd
 439	common	faccessat2		sys_faccessat2
 440	common	process_madvise		sys_process_madvise
+441	common  retconst			sys_retconst
+442	common  hello			    sys_hello
+443	common  prt5000			    sys_ptr5000
+444	common  argptr	    		sys_argptr
+445	common  getstate	    	sys_getstate
+446 common  register_proc_with_sandbox          sys_register_proc_with_sandbox
+447 common  unregister_proc_with_sandbox        sys_unregister_proc_with_sandbox
+448 common  register_syscall_with_sandbox       sys_register_syscall_with_sandbox
+449 common  unregister_syscall_with_sandbox     sys_unregister_syscall_with_sandbox
 
 #
 # Due to a historical design error, certain syscalls are numbered differently
